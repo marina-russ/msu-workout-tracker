@@ -1,31 +1,29 @@
-const express = require('express');
-const mongoose = require('mongoose');
-require('dotenv').config();
-
-const PORT = process.env.PORT || 3000;
-const host = process.env.HOST;
+const express = require("express");
+const morgan = require("morgan");
+const mongoose = require("mongoose");
 
 const app = express();
-const db = require('./models')
+const PORT = process.env.PORT || 3000;
 
-// App.USE()
+app.use(morgan("dev"));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static('public'));
 
-// mongoose connect
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
+mongoose.connect(
+    process.env.MONGODB_URI || 'mongodb://localhost/workouttracker_db',
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false
+    }
+);
+
+app.use(require("./routes/apiRoutes"));
+app.use(require("./routes/pageRoutes"));
+
+app.listen(PORT, function () {
+    console.log(`App listening on Port ${PORT}`);
 });
-
-// routes
-require('./routes/api.js')(app);
-require('./routes/html-routes.js')(app);
-
-app.listen(PORT, () => {
-  console.log(`App running on port ${PORT}!`);
-});
-
-module.exports = app;
