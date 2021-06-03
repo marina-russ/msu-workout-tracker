@@ -23,6 +23,7 @@ function populateChart(data) {
   const bar = document.querySelector('#canvas2').getContext('2d');
 
   const labels = data.map(({ date }) => {
+    //data.exercises.map??
     const workoutDate = new Date(date);
 
     // Use JavaScript's `Intl` object to help format dates
