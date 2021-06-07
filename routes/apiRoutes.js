@@ -24,6 +24,7 @@ router.post('/api/workouts', (req, res) => {
 router.get('/api/workouts/range', (req, res) => {
     Workout.find()
         .then(data =>{  
+            console.log(data);
             res.json(data)
         })
         .catch(err => { 
@@ -31,13 +32,13 @@ router.get('/api/workouts/range', (req, res) => {
         })
 });
 
-router.post('/api/workouts/range', (req, res) => {
-    Workout.create({})
-        .then(data => res.json(data))
-        .catch(err => { 
-            res.json(err)
-        })
-});
+// router.post('/api/workouts/range', (req, res) => {
+//     Workout.create({})
+//         .then(data => res.json(data))
+//         .catch(err => { 
+//             res.json(err)
+//         })
+// });
 
 router.put("/api/workouts/:id",({body,params},res)=>{   
     Workout.findByIdAndUpdate(  
